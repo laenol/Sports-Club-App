@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>SPORTS CLUB APPLICATION</title>
+</head>
+<body>
+    <h1>HI</h1>
+    <div class="container mb-2">
+        <div sec:authorize="isAuthenticated()">
+            <p class="fs-3 fw-bold" th:inline="text">Welcome <span sec:authentication="name"></span></p>
+            &nbsp;
+            <p class="fs-3 fw-bold" th:inline="text">Roles <span sec:authentication="principal.authorities"></span></p>
+
+        </div>
+        <form th:action="@{/logout}" method="POST">
+            <input class="btn btn-info" type="submit" value="Logout">
+        </form>
+    </div>
+</body>
+</html>
