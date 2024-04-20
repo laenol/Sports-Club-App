@@ -42,7 +42,7 @@ public class WebSecurityConfiguration {
     protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(
                         auth -> auth
-                                .requestMatchers("/").hasAnyAuthority("ROLE_MEMBER", "ROLE_LEADER", "ROLE_DEVELOPER")
+                                .requestMatchers("/","/dashboard").hasAnyAuthority("DEVELOPER")
                                 .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
