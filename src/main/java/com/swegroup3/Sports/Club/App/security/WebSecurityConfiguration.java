@@ -46,6 +46,7 @@ public class WebSecurityConfiguration {
                                 .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
+                        .defaultSuccessUrl("/dashboard", true)
                         .permitAll())
                 .logout(l -> l.permitAll())
                 .exceptionHandling(e -> e.accessDeniedPage("/403"));
