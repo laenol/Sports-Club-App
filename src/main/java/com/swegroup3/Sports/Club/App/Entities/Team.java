@@ -22,6 +22,9 @@ public class Team {
     @JoinColumn(name = "leader", referencedColumnName = "id")
     private User leader;
 
+    @OneToMany(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "team_id")
+    private List<Event> events;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id")

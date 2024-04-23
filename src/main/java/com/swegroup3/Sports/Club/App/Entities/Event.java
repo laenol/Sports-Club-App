@@ -25,6 +25,10 @@ public class Event {
 
     private Long max_amount_participants;
 
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
+
     @ManyToMany(mappedBy = "events")
     private Set<User> users =new HashSet<>();
 
