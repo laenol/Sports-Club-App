@@ -8,20 +8,19 @@
 <body>
 <div class="container mt-5">
     <h2>Team Form.</h2>
-    <form th:action="@{/teams/save}" method="POST">
+    <form th:action="@{/teams/new}" method="POST">
+        <input type="hidden" id="leaderId" name="leaderId" th:value="${leaderId}">
 
-        <input type="hidden" th:field="*{team.id}">
-        <input id="leaderId" name="leaderId" type="hidden" th:value="*{userAuthenticated.id}" th:field="*{userAuthenticated.id}">
 
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" th:value="*{team.name}" id="name" name="name" class="form-control">
+            <input class="form-control" id="name" name="na,e" type="text" th:field="*{team.name}">
         </div>
 
         <div class="form-group">
             <label for="membersId">Team Members</label>
-            <select multiple class="form-control" id="membersId">
-                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+            <select multiple class="form-control" id="membersId" name="membersId">
+                <option th:each="user : ${users}" th:text="${user.name}" th:value="${user.id}" ></option>
             </select>
         </div>
 

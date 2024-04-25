@@ -36,10 +36,22 @@ public class TeamController {
         String username = userDetails.getUsername();
         User userAuthenticated = userService.getByUsername(username);
         model.addAttribute("team", new Team());
-        model.addAttribute("userAuthenticated", userAuthenticated);
+        model.addAttribute("leaderId", userAuthenticated.getId());
         model.addAttribute("users", userService.obtainAll());
-        model.addAttribute("action", "/team/new");
-        return "team/form_team";
+         return "team/form_team";
+    }
+    @PostMapping("/new")
+    public String saveTeam(@ModelAttribute Team team,
+                           @RequestParam(value = "leaderId") Long leaderId,
+                           @RequestParam(value = "membersId") List<Long> membersId){
+        Optional<User> leader =  userService.obtainById(leaderId);
+        leader.ifPresent(team::setLeader);
+
+        List<User> members = userService.findByIds(membersId);
+        team.setMembers(members);
+
+        teamService.saveTeam(team);
+        return "redirect:/teams/list";
     }
 
     @GetMapping("/team/{id}")
@@ -55,19 +67,7 @@ public class TeamController {
         return "team/show_team";
     }
 
-    @PostMapping("/save")
-    public String saveTeam(@ModelAttribute Team team,
-                           @RequestParam(value = "leaderId") Long leaderId,
-                           @RequestParam(value = "membersId") List<Long> membersId){
-        Optional<User> leader =  userService.obtainById(leaderId);
-        leader.ifPresent(team::setLeader);
 
-        List<User> members = userService.findByIds(membersId);
-        team.setMembers(members);
-
-        teamService.saveTeam(team);
-        return "redirect:/teams/list";
-    }
 
     @GetMapping("/{id}/members")
     public String showTeamMembers(@PathVariable Long id, Model model){
