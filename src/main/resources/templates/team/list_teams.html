@@ -21,7 +21,7 @@
         <td th:text="${team.name}"></td>
         <td th:text="${team.leader.name}"></td>
         <td>
-            <a th:href="@{/team/{id}/members(id=${team.id})}" class="btn btn-info">View members</a>
+            <a th:href="@{/teams/{id}/members(id=${team.id})}" class="btn btn-info">View members</a>
         </td>
         </tbody>
     </table>

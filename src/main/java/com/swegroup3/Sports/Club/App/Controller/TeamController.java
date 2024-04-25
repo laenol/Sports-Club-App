@@ -54,7 +54,7 @@ public class TeamController {
         return "redirect:/teams/list";
     }
 
-    @GetMapping("/team/{id}")
+    @GetMapping("/{id}")
     public String showTeam(@PathVariable Long id, Model model){
         Optional<Team> teamOptional = teamService.findById(id);
         if(teamOptional.isPresent()){
@@ -64,7 +64,7 @@ public class TeamController {
             model.addAttribute("members", team.getMembers());
             //Todo Events / comments
         }
-        return "team/show_team";
+        return "team/show_team_members";
     }
 
 
