@@ -29,7 +29,7 @@ public class Event {
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @ManyToMany(mappedBy = "events")
-    private Set<User> users =new HashSet<>();
+    // @ManyToMany(mappedBy = "events")
+    // private Set<User> users =new HashSet<>();
 
 }
