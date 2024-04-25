@@ -1,6 +1,5 @@
 package com.swegroup3.Sports.Club.App.Services.implementations;
 
-
 import com.swegroup3.Sports.Club.App.Entities.Event;
 import com.swegroup3.Sports.Club.App.Entities.Team;
 import com.swegroup3.Sports.Club.App.Entities.User;
@@ -18,6 +17,7 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     private EventRepository eventRepository;
+
     @Override
     public Event SaveEvent(Event event) {
         return eventRepository.save(event);
@@ -36,27 +36,28 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event updateEvent(Long id, Event event) {
         Event eventDDBB = eventRepository.findById(id).orElse(null);
-        if(eventDDBB != null){
+        if (eventDDBB != null) {
             eventDDBB.setName(event.getName());
             eventDDBB.setTeam(event.getTeam());
             eventDDBB.setDescription(event.getDescription());
-            eventDDBB.setUsers(event.getUsers());
+            // eventDDBB.setUsers(event.getUsers());
             eventDDBB.setMax_amount_participants(event.getMax_amount_participants());
             eventDDBB.setLocation(event.getLocation());
         }
-        return event ;
+        return event;
     }
 
     @Override
-    public Event addUserToEvent(Long id, Event event, User user){
+    public Event addUserToEvent(Long id, Event event, User user) {
         Event eventDDBB = eventRepository.findById(id).orElse(null);
-        if(eventDDBB != null){
-            Set<User> tempUsers = event.getUsers();
-            tempUsers.add(user);
-            eventDDBB.setUsers(tempUsers);
+        if (eventDDBB != null) {
+            // Set<User> tempUsers = event.getUsers();
+            // tempUsers.add(user);
+            // eventDDBB.setUsers(tempUsers);
         }
         return event;
     }
+
     @Override
     public void deleteEvent(Long id) {
         eventRepository.deleteById(id);
