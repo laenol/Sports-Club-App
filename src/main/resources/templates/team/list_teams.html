@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container mt-5">
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>TEAM</th>
+            <th>LEADER</th>
+            <th>MEMBERS</th>
+        </tr>
+        </thead>
+        <tbody th:each="team: ${teams}">
+        <td th:text="${team.id}"></td>
+        <td th:text="${team.name}"></td>
+        <td th:text="${team.leader.name}"></td>
+        <td>
+            <a th:href="@{/team/{id}/members(id=${team.id})}" class="btn btn-info">View members</a>
+        </td>
+        </tbody>
+    </table>
+    <a href="/teams/new" type="submit" class="btn btn-success">New Team</a>
+</div>
+</body>
+</html>

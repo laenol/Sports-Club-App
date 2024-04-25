@@ -19,6 +19,8 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
+
+
     @GetMapping("/new")
     public String showFormAddEvent(Model model){
         model.addAttribute("event", new Event());

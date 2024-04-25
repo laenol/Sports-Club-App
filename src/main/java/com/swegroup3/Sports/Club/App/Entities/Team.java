@@ -18,7 +18,7 @@ public class Team {
     private Long id;
     private String name;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "leader", referencedColumnName = "id")
     private User leader;
 
