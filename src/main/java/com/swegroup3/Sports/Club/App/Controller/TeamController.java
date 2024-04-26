@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +63,7 @@ public class TeamController {
             model.addAttribute("members", team.getMembers());
             //Todo Events / comments
         }
-        return "team/show_team_members";
+        return "team/show_team";
     }
 
 

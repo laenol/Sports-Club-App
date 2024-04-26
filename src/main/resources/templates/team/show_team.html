@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h2>TEAM  <span th:text="${team.name}"></span> <</h2>
+    <h3>LEADER <span th:text="${leader.name}"></span></h3>
+    <h3>MEMBERS <span th:text="${team.getMembers().size()}"></span> / 50</h3>
+    <ul class="list-group mt-3">
+        <li th:each="member: ${members}" class="list-group-item" th:text="${member.name}"></li>
+    </ul>
+    <a href="/teams/" class="btn btn-secondary mt-3">Return</a>
+</div>
+</body>
+</html>

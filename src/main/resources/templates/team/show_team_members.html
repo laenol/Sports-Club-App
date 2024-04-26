@@ -6,11 +6,20 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h2>TEAM  <span th:text="${team.name}"></span></h2>
-    <h3>MEMBERS:</h3>
-    <ul class="list-group mt-3">
-        <li th:each="member: ${members}" class="list-group-item" th:text="${member.name}"></li>
-    </ul>
+    <h2>TEAM MEMBERS  <span th:text="${team.name}"></span></h2> <table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>ROLE</th>
+    </tr>
+    </thead>
+    <tbody th:each="member: ${members}">
+    <td th:text="${member.id}"></td>
+    <td th:text="${member.name}"></td>
+    <td th:text="${member.role.name}"></td>
+    </tbody>
+</table>
     <a href="/teams/" class="btn btn-secondary mt-3">Return</a>
 </div>
 </body>
