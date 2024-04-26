@@ -13,6 +13,11 @@
         <li th:each="member: ${members}" class="list-group-item" th:text="${member.name}"></li>
     </ul>
     <a href="/teams/" class="btn btn-secondary mt-3">Return</a>
+
+    <H2>Events</H2>
+    <a th:href="@{/events/{teamId}/new(teamId=${team.id})}">CREATE EVENT</a>
+    <a th:href="@{/events/team/{teamId}(teamId=${team.id})}">SEE EVENTS</a>
+
 </div>
 </body>
 </html>
