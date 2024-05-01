@@ -1,0 +1,32 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="alert alert-info" th:if="${message != null}">
+        [[${message}]]
+    </div>
+    <a class="btn btn-info" href="/auth/login/">LOG IN </a>
+    <h2>Registration Form</h2>
+    <form th:action="@{/registration}" method="post" role="form" th:object="${user}">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input th:field="*{name}" type="text" class="form-control" id="name" name="name" placeholder="Enter your fullname" required>
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input th:field="*{username}" type="email" class="form-control" id="username" name="username" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input th:field="*{password}" type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>
+</body>

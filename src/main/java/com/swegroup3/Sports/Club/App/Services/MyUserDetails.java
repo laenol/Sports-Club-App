@@ -3,7 +3,9 @@ package com.swegroup3.Sports.Club.App.Services;
 
 import com.swegroup3.Sports.Club.App.Entities.Role;
 import com.swegroup3.Sports.Club.App.Entities.User;
+import com.swegroup3.Sports.Club.App.Repositories.RoleRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,16 +18,18 @@ import java.util.Set;
 @AllArgsConstructor
 public class MyUserDetails implements UserDetails {
     private User user;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Role role =user.getRole();
         List<SimpleGrantedAuthority> authorities =new ArrayList<>();
 
-        authorities.add(new SimpleGrantedAuthority(role.getName()));
+        authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
 
         return authorities;
     }
-
+    public String getName(){
+        return user.getName();
+    }
     @Override
     public String getPassword() {
         return user.getPassword();

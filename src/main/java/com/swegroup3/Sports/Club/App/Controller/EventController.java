@@ -55,7 +55,7 @@ public class EventController {
         if(teamOptional.isPresent()){
             Team team = teamOptional.get();
             model.addAttribute("team", team);
-            model.addAttribute("events", team.getEvents());
+          //  model.addAttribute("events", team.getEvents());
         }
         return "event/show_team_events";
     }
