@@ -21,16 +21,28 @@ public class User {
     private String username;
     private String password;
 
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "user_event",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id")
-    )
-    private Set<Event> events = new HashSet<>();
+    public User(String name, String username, String encode, Role role) {
+        this.name = name;
+        this.username = username;
+        this.password = encode;
+        this.role = role;
+    }
+
+
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(
+//            name = "user_event",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "event_id")
+//    )
+//    private Set<Event> events = new HashSet<>();
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "team_id")
+//    private Team team;
 
 }

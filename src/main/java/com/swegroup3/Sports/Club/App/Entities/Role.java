@@ -19,7 +19,5 @@ public class Role {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<User> users = new ArrayList<>();
 
 }
