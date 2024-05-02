@@ -23,5 +23,4 @@ public class Comment {
     @Column(nullable = false)
     private String text;
 
-    // Constructor, getters and setters can be omitted for brevity
 }
