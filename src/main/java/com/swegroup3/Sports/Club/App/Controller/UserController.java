@@ -29,7 +29,7 @@ public class UserController {
         return "register";
     }
 
-    @PostMapping("/save_registration")
+    @PostMapping("/registration")
     public String saveUser(@ModelAttribute("user") UserDto userDto, Model model) {
         UserDto user = userDto;
         user.setRole(roleRepository.getReferenceById(3L));
