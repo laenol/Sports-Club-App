@@ -18,7 +18,7 @@ public class Team {
     private Long id;
     private String name;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinColumn(name = "leader", referencedColumnName = "id")
     private User leader;
 

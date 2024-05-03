@@ -32,7 +32,7 @@
             <td sec:authorize="hasAnyAuthority('LEADER')">
                 <div th:if="${user.id == team.leader.id}">
                     <a class="btn btn-light">Update</a>
-                    <a class="btn btn-warning">Delete</a>
+                    <a th:href="@{/teams/{teamId}/delete(teamId = ${team.id})}" class="btn btn-warning">Delete</a>
                 </div>
             </td>
             <td sec:authorize="hasAnyAuthority('MEMBER')">

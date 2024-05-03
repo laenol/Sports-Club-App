@@ -1,11 +1,11 @@
 package com.swegroup3.Sports.Club.App.Services.implementations;
 
 import com.swegroup3.Sports.Club.App.Entities.User;
+import com.swegroup3.Sports.Club.App.Repositories.TeamRepository;
 import com.swegroup3.Sports.Club.App.Repositories.UserRepository;
 import com.swegroup3.Sports.Club.App.Services.UserService;
 import com.swegroup3.Sports.Club.App.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +19,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private TeamRepository teamRepository;
 
     @Override
     public List<User> obtainAll() {
@@ -71,4 +73,13 @@ public class UserServiceImpl implements UserService {
     public long quantityOfUsers() {
         return userRepository.count();
     }
+
+    @Override
+    public List<User> userRolesList(Long roleID) {
+        List<Long> listMembers =  userRepository.getUsersByRole(roleID);
+        return userRepository.findAllById(listMembers);
+    }
+
+
+
 }

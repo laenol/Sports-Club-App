@@ -17,4 +17,5 @@ public interface UserService {
     User saveUser(UserDto userDto);
     void deleteUser(Long id);
     long quantityOfUsers();
+    List<User> userRolesList(Long roleID);
 }

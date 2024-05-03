@@ -40,7 +40,7 @@ public class TeamController {
         User userAuthenticated = userService.getByUsername(username);
         model.addAttribute("team", new Team());
         model.addAttribute("leaderId", userAuthenticated.getId());
-        model.addAttribute("users", userService.obtainAll());
+        model.addAttribute("members", userService.userRolesList(3L));
          return "team/form_team";
     }
     @PostMapping("/new")
@@ -104,6 +104,19 @@ public class TeamController {
                 teamMember.getMembers().remove(user);
                 teamService.saveTeam(teamMember);
             }
+        }
+        return "redirect:/teams/";
+    }
+
+    @GetMapping("/{teamId}/delete")
+    public String deleteTeam(@AuthenticationPrincipal MyUserDetails userDetails ,@PathVariable Long teamId){
+        String username = userDetails.getUsername();
+        User user = userService.getByUsername(username);
+        Optional<Team> teamOptional = teamService.findById(teamId);
+        if(teamOptional.isPresent()){
+            Team team = teamOptional.get();
+            team.setLeader(null);
+            teamService.deleteTeam(teamId);
         }
         return "redirect:/teams/";
     }
