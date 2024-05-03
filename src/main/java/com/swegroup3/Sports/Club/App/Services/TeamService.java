@@ -1,6 +1,7 @@
 package com.swegroup3.Sports.Club.App.Services;
 
 import com.swegroup3.Sports.Club.App.Entities.Team;
+import com.swegroup3.Sports.Club.App.Entities.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface TeamService {
     List<Team> listAllTeams();
     Team updateTeam(Team team);
     void deleteTeam(Long id);
+    void addMember(Long teamId, User member);
 }

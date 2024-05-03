@@ -41,8 +41,8 @@ public class User {
 //            inverseJoinColumns = @JoinColumn(name = "event_id")
 //    )
 //    private Set<Event> events = new HashSet<>();
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "team_id")
-//    private Team team;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "team_id")
+    private Team team;
 
 }

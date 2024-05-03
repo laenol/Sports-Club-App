@@ -14,11 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 public class Team {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "leader", referencedColumnName = "id")
     private User leader;
 

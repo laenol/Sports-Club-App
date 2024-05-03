@@ -1,7 +1,9 @@
 package com.swegroup3.Sports.Club.App.Services.implementations;
 
 import com.swegroup3.Sports.Club.App.Entities.Team;
+import com.swegroup3.Sports.Club.App.Entities.User;
 import com.swegroup3.Sports.Club.App.Repositories.TeamRepository;
+import com.swegroup3.Sports.Club.App.Repositories.UserRepository;
 import com.swegroup3.Sports.Club.App.Services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ public class TeamServiceImpl implements TeamService {
 
     @Autowired
     private TeamRepository teamRepository;
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public Team saveTeam(Team team) {
         return teamRepository.save(team);
@@ -44,5 +49,14 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void deleteTeam(Long id) {
         teamRepository.deleteById(id);
+    }
+
+    @Override
+    public void addMember(Long teamId, User member) {
+        Team team = teamRepository.findById(teamId).get();
+        List<User> currentMembers = team.getMembers();
+        currentMembers.add(member);
+        team.setMembers(currentMembers);
+        teamRepository.save(team);
     }
 }

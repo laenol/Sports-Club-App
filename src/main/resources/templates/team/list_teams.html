@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Title</title>
 </head>
 <body>
 
 <div class="container mt-5">
-    <table class="table">
+    <table class="table text-nowrap">
         <thead class="thead-dark">
         <tr>
             <th>ID</th>
             <th>TEAM</th>
             <th>LEADER</th>
             <th>MEMBERS</th>
-
+            <th> ACTIONS</th>
         </tr>
         </thead>
         <tbody th:each="team: ${teams}">
@@ -26,9 +29,22 @@
             <td>
                 <a th:href="@{/teams/{id}/members(id=${team.id})}" class="btn btn-info">View members</a>
             </td>
+            <td sec:authorize="hasAnyAuthority('LEADER')">
+                <div th:if="${user.id == team.leader.id}">
+                    <a class="btn btn-light">Update</a>
+                    <a class="btn btn-warning">Delete</a>
+                </div>
+            </td>
+            <td sec:authorize="hasAnyAuthority('MEMBER')">
+                <a th:href="@{/teams/{teamId}/add(teamId = ${team.id})}" th:if="${user.team == null}" class="btn btn-success">Enroll</a>
+                <div th:unless="${user.team == null}">
+                    <a th:href="@{/teams/{teamId}/leave(teamId = ${team.id})}" th:if="${user.team.id == team.id} " class="btn btn-danger">Leave</a>
+                </div>
+            </td>
         </tbody>
     </table>
-    <a href="/teams/new" type="submit" class="btn btn-success">New Team</a>
+    <a sec:authorize="hasAnyAuthority('LEADER')" href="/teams/new" type="submit" class="btn btn-success">New Team</a>
+    <a class="btn btn-info" href="/user-page">RETURN</a>
 </div>
 </body>
 </html>

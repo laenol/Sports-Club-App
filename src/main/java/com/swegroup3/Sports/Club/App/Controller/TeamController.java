@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +25,11 @@ public class TeamController {
     private UserService userService;
 
     @GetMapping({"/","/list"})
-    private String listTeams(Model model){
+    private String listTeams(@AuthenticationPrincipal MyUserDetails userDetails, Model model){
+        String username = userDetails.getUsername();
+        User userAuthenticated = userService.getByUsername(username);
         model.addAttribute("teams", teamService.listAllTeams());
+        model.addAttribute("user", userAuthenticated);
         return "team/list_teams";
 
     }
@@ -42,12 +46,15 @@ public class TeamController {
     @PostMapping("/new")
     public String saveTeam(@ModelAttribute Team team,
                            @RequestParam(value = "leaderId") Long leaderId,
-                           @RequestParam(value = "membersId") List<Long> membersId){
+                           @RequestParam(value = "membersId", required = false) List<Long> membersId){
         Optional<User> leader =  userService.obtainById(leaderId);
         leader.ifPresent(team::setLeader);
-
-        List<User> members = userService.findByIds(membersId);
-        team.setMembers(members);
+        if(membersId == null){
+            team.setMembers(new ArrayList<>());
+        }else{
+            List<User> members = userService.findByIds(membersId);
+            team.setMembers(members);
+        }
 
         teamService.saveTeam(team);
         return "redirect:/teams/list";
@@ -77,5 +84,27 @@ public class TeamController {
             model.addAttribute("members", team.getMembers());
         }
         return "team/show_team_members";
+    }
+    @GetMapping("/{teamId}/add")
+    public String addMemberToTeam(@AuthenticationPrincipal MyUserDetails userDetails, @PathVariable Long teamId){
+        String username = userDetails.getUsername();
+        User user = userService.getByUsername(username);
+        teamService.addMember(teamId, user);
+        return "redirect:/teams/";
+    }
+    @GetMapping("{teamId}/leave")
+    public String leaveMemberFromTeam(@AuthenticationPrincipal MyUserDetails userDetails, @PathVariable Long teamId){
+        String username = userDetails.getUsername();
+        User user = userService.getByUsername(username);
+        Optional<Team> teamMemberList = teamService.findById(teamId);
+        if(teamMemberList.isPresent()){
+            Team teamMember = teamMemberList.get();
+            Boolean isMember = teamMember.getMembers().contains(user);
+            if(isMember){
+                teamMember.getMembers().remove(user);
+                teamService.saveTeam(teamMember);
+            }
+        }
+        return "redirect:/teams/";
     }
 }
