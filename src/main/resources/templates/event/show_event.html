@@ -2,23 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>EVENTS</title>
 </head>
 <body>
 <div class="container mt-5">
-    <h2>Event:   <span th:text="${event.name}"></span> <</h2>
-    <p>Created By: <span th:text="${event.user.name}"></span></p>
-    <p>Description <span th:text="${event.description}"></span></p>
-    <p>Participants number: <span th:text="${event.max_amount_participants}"></span></p>
-    <p>Start Time: <span th:text="${event.dateTimeEnd}"></span></p>
-    <p>End Time: <span th:text="${event.dateTimeEnd}"></span></p>
-    <p>Location: <span th:text="${event.location}"></span></p>
-    <p>Created at: <span th:text="${event.timestamp}"></span></p>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title"><span th:text="${event.name}" class="font-weight-bold"></span></h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">Created By: <span th:text="${event.user.name}"></span></p>
+            <p class="card-text">Description: <span th:text="${event.description}"></span></p>
+            <p class="card-text">Participants number: <span th:text="${event.max_amount_participants}"></span></p>
+            <p class="card-text">Start Time: <span th:text="${#dates.format(event.dateTimeStart, 'dd-MM-yyyy HH:mm')}"></span></p>
+            <p class="card-text">End Time: <span th:text="${#dates.format(event.dateTimeEnd, 'dd-MM-yyyy HH:mm')}"></span></p>
+            <p class="card-text">Location: <span th:text="${event.location}"></span></p>
+            <p class="card-text">Created at: <span th:text="${#dates.format(event.timestamp, 'dd-MM-yyyy HH:mm')}"></span></p>
+        </div>
+    </div>
 
-
-    <a th:href="@{/teams/{id}(id=${team.id})}" class="btn btn-secondary mt-3">Return</a>
-
-
+    <a th:href="@{/teams/{id}(id=${team.id})}" class="btn btn-info mt-3">Return</a>
 </div>
 </body>
 </html>

@@ -26,9 +26,9 @@ public class Event {
     private String location;
     private Long max_amount_participants;
 
-    private LocalDateTime dateTimeStart = LocalDateTime.now();
+    private Date dateTimeStart;
 
-    private LocalDateTime dateTimeEnd = LocalDateTime.now();
+    private Date dateTimeEnd;
 
     @ManyToOne
     @JoinColumn(name = "team_id")
@@ -38,5 +38,5 @@ public class Event {
     @JoinColumn(name = "created_by", referencedColumnName = "id")
     private User user;
 
-    private Timestamp timestamp = new Timestamp(System.currentTimeMillis();
+    private Timestamp timestamp;
 }

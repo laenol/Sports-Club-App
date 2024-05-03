@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>EVENTS</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 
 <div class="container mt-5">
-  <H1><span th:text="${team.name}"></span>'S EVENTS</H1>
-  <table class="table">
+  <h1><span th:text="${team.name}"></span>'S EVENTS</h1>
+  <table class="table text-nowrap">
     <thead class="thead-dark">
     <tr>
       <th>ID</th>
@@ -20,7 +21,7 @@
       <th>END DATE</th>
       <th>CREATED BY</th>
       <th>CREATED AT</th>
-
+      <th>ACTIONS</th>
     </tr>
     </thead>
     <tbody th:each="event: ${events}">
@@ -31,11 +32,16 @@
     <td th:text="${event.description}"></td>
     <td th:text="${event.location}"></td>
     <td th:text="${event.max_amount_participants}"></td>
-    <td th:text="${event.dateTimeStart}"></td>
-    <td th:text="${event.dateTimeEnd}"></td>
+    <td th:if="${event.dateTimeStart}" th:text="${#dates.format(event.dateTimeStart, 'dd-MM-yyyy HH:mm')}"></td>
+    <td th:if="${event.dateTimeStart}" th:text="${#dates.format(event.dateTimeEnd, 'dd-MM-yyyy HH:mm')}"></td>
     <th th:text="${event.user.name}"></th>
     <th th:text="${event.timestamp}"></th>
+    <th>
 
+      <a class="btn btn-info">Modify</a>
+      <a class="btn btn-danger">Delete</a>
+
+    </th>
     </tbody>
   </table>
   <a th:href="@{/teams/{teamID}(teamID = ${team.id})}" type="submit" class="btn btn-success">Return</a>
