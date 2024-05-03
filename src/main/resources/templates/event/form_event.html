@@ -25,6 +25,14 @@
             <input class="form-control" id="location" name="location" type="text" th:field="*{event.location}">
         </div>
         <div class="form-group">
+            <label for="eventStart">Event Date starts At: </label>
+            <input class="form-control" id="eventStart" name="eventStart" type="datetime-local" th:field="*{event.dateTimeStart}">
+        </div>
+        <div class="form-group">
+            <label for="eventEnd">Event Date ends At: </label>
+            <input class="form-control" id="eventEnd" name="eventEnd" type="datetime-local" th:field="*{event.dateTimeEnd}">
+        </div>
+        <div class="form-group">
             <label for="max_participants">Event MAXIMUM participants</label>
             <input class="form-control" id="max_participants" name="max_participants" type="range" th:field="*{event.max_amount_participants}">
         </div>

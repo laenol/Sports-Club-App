@@ -30,19 +30,22 @@ public class EventController {
 
     @GetMapping("/{teamId}/new")
     public String showFormAddEvent(@PathVariable Long teamId,
-                                    @AuthenticationPrincipal MyUserDetails userDetails,
+                                   @AuthenticationPrincipal MyUserDetails userDetails,
                                    Model model){
-        String username = userDetails.getUsername();
-        User userAuthenticated = userService.getByUsername(username);
         Optional<Team> team = teamService.findById(teamId);
         model.addAttribute("event", new Event());
         model.addAttribute("team", team.get());
+
         return "event/form_event";
     }
     @PostMapping("/{teamId}/save")
     public String saveEvent(@ModelAttribute Event event,
+                            @AuthenticationPrincipal MyUserDetails userDetails,
                             @PathVariable Long teamId){
         Optional<Team> team = teamService.findById(teamId);
+        String username = userDetails.getUsername();
+        User userAuthenticated = userService.getByUsername(username);
+        event.setUser(userAuthenticated);
         team.ifPresent(event::setTeam);
         eventService.SaveEvent(event);
 

@@ -16,7 +16,10 @@
       <th>DESCRIPTION</th>
       <th>LOCATION</th>
       <th>MAX PARTICIPANTS</th>
-
+      <th>START DATE</th>
+      <th>END DATE</th>
+      <th>CREATED BY</th>
+      <th>CREATED AT</th>
 
     </tr>
     </thead>
@@ -28,6 +31,10 @@
     <td th:text="${event.description}"></td>
     <td th:text="${event.location}"></td>
     <td th:text="${event.max_amount_participants}"></td>
+    <td th:text="${event.dateTimeStart}"></td>
+    <td th:text="${event.dateTimeEnd}"></td>
+    <th th:text="${event.user.name}"></th>
+    <th th:text="${event.timestamp}"></th>
 
     </tbody>
   </table>

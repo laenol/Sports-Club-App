@@ -9,7 +9,7 @@
     <div class="alert alert-info" th:if="${message != null}">
         [[${message}]]
     </div>
-    <a class="btn btn-info" href="/auth/login/">LOG IN </a>
+    <a class="btn btn-info" href="/login/">LOG IN </a>
     <h2>Registration Form</h2>
     <form th:action="@{/registration}" method="post" role="form" th:object="${user}">
         <div class="form-group">

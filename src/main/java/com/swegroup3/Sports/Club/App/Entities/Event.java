@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Singular;
 import org.hibernate.annotations.BatchSize;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,17 +22,21 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-
     private String description;
     private String location;
-
     private Long max_amount_participants;
+
+    private LocalDateTime dateTimeStart = LocalDateTime.now();
+
+    private LocalDateTime dateTimeEnd = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;
 
-    // @ManyToMany(mappedBy = "events")
-    // private Set<User> users =new HashSet<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "created_by", referencedColumnName = "id")
+    private User user;
 
+    private Timestamp timestamp = new Timestamp(System.currentTimeMillis();
 }
