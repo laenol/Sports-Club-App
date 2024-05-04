@@ -9,7 +9,7 @@
 <div class="container mt-5">
     <h2>TEAM  <span th:text="${team.name}"></span> <</h2>
     <h3>LEADER <span th:text="${leader.name}"></span></h3>
-    <h3>MEMBERS <span th:text="${team.getMembers().size()}"></span> / 50</h3>
+    <h3>MEMBERS <span th:text="${team.getTeam_members().size()}"></span> / 50</h3>
     <ul class="list-group mt-3">
         <li th:each="member: ${members}" class="list-group-item" th:text="${member.name}"></li>
     </ul>

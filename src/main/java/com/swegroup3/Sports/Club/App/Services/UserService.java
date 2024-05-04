@@ -6,6 +6,7 @@ import com.swegroup3.Sports.Club.App.dto.UserDto;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface UserService {
     List<User> obtainAll();

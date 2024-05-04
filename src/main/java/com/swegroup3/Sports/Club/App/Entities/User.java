@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -41,8 +43,8 @@ public class User {
 //            inverseJoinColumns = @JoinColumn(name = "event_id")
 //    )
 //    private Set<Event> events = new HashSet<>();
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "team_id")
-    private Team team;
+
+    @ManyToMany(mappedBy = "team_members")
+    private List<Team> teams = new ArrayList<>();
 
 }

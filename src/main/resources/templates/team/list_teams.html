@@ -36,10 +36,9 @@
                 </div>
             </td>
             <td sec:authorize="hasAnyAuthority('MEMBER')">
-                <a th:href="@{/teams/{teamId}/add(teamId = ${team.id})}" th:if="${user.team == null}" class="btn btn-success">Enroll</a>
-                <div th:unless="${user.team == null}">
-                    <a th:href="@{/teams/{teamId}/leave(teamId = ${team.id})}" th:if="${user.team.id == team.id} " class="btn btn-danger">Leave</a>
-                </div>
+                <a th:href="@{/teams/{teamId}/add(teamId = ${team.id})}" th:if="${!team.getTeam_members().contains(user)}" class="btn btn-success">Enroll</a>
+                    <a th:href="@{/teams/{teamId}/leave(teamId = ${team.id})}" th:if="${team.getTeam_members().contains(user)} " class="btn btn-danger">Leave</a>
+
             </td>
         </tbody>
     </table>

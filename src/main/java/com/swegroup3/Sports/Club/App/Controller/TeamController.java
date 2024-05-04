@@ -11,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/teams")
@@ -53,10 +50,10 @@ public class TeamController {
         User user = userService.getByUsername(username);
         team.setLeader(user);
         if(membersId == null){
-            team.setMembers(new ArrayList<>());
+            team.setTeam_members(new ArrayList<>());
         }else{
             List<User> members = userService.findByIds(membersId);
-            team.setMembers(members);
+            team.setTeam_members(members);
         }
 
         teamService.saveTeam(team);
@@ -70,7 +67,7 @@ public class TeamController {
             Team team = teamOptional.get();
             model.addAttribute("team", team);
             model.addAttribute("leader", team.getLeader());
-            model.addAttribute("members", team.getMembers());
+            model.addAttribute("members", team.getTeam_members());
             //Todo Events / comments
         }
         return "team/show_team";
@@ -96,10 +93,10 @@ public class TeamController {
         User user = userService.getByUsername(username);
         team.setLeader(user);
         if(membersId == null){
-            team.setMembers(new ArrayList<>());
+            team.setTeam_members(new ArrayList<>());
         }else{
             List<User> members = userService.findByIds(membersId);
-            team.setMembers(members);
+            team.setTeam_members(members);
         }
         teamService.updateTeam(id, team);
         return "redirect:/teams/";
@@ -112,7 +109,7 @@ public class TeamController {
         if(teamOptional.isPresent()){
             Team team = teamOptional.get();
             model.addAttribute("team", team);
-            model.addAttribute("members", team.getMembers());
+            model.addAttribute("members", team.getTeam_members());
         }
         return "team/show_team_members";
     }
@@ -130,9 +127,9 @@ public class TeamController {
         Optional<Team> teamMemberList = teamService.findById(teamId);
         if(teamMemberList.isPresent()){
             Team teamMember = teamMemberList.get();
-            Boolean isMember = teamMember.getMembers().contains(user);
+            Boolean isMember = teamMember.getTeam_members().contains(user);
             if(isMember){
-                teamMember.getMembers().remove(user);
+                teamMember.getTeam_members().remove(user);
                 teamService.saveTeam(teamMember);
             }
         }

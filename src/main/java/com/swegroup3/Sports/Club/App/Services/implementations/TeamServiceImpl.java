@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class TeamServiceImpl implements TeamService {
@@ -44,7 +45,7 @@ public class TeamServiceImpl implements TeamService {
     public Team updateTeam(Long id, Team team) {
         Team teamDDBB = teamRepository.findById(id).orElse(null);
         if(teamDDBB != null){
-            teamDDBB.setMembers(team.getMembers());
+            teamDDBB.setTeam_members(team.getTeam_members());
             teamDDBB.setLeader(teamDDBB.getLeader());
             teamDDBB.setName(team.getName());
             return teamRepository.save(team);
@@ -60,9 +61,9 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void addMember(Long teamId, User member) {
         Team team = teamRepository.findById(teamId).get();
-        List<User> currentMembers = team.getMembers();
+        List<User> currentMembers = team.getTeam_members();
         currentMembers.add(member);
-        team.setMembers(currentMembers);
+        team.setTeam_members(currentMembers);
         teamRepository.save(team);
     }
 }
