@@ -41,9 +41,15 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Team updateTeam(Team team) {
-
-        return teamRepository.save(team);
+    public Team updateTeam(Long id, Team team) {
+        Team teamDDBB = teamRepository.findById(id).orElse(null);
+        if(teamDDBB != null){
+            teamDDBB.setMembers(team.getMembers());
+            teamDDBB.setLeader(teamDDBB.getLeader());
+            teamDDBB.setName(team.getName());
+            return teamRepository.save(team);
+        }
+        return null;
     }
 
     @Override

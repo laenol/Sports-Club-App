@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -41,14 +42,16 @@ public class TeamController {
         model.addAttribute("team", new Team());
         model.addAttribute("leaderId", userAuthenticated.getId());
         model.addAttribute("members", userService.userRolesList(3L));
+        model.addAttribute("action", "/teams/new");
          return "team/form_team";
     }
     @PostMapping("/new")
     public String saveTeam(@ModelAttribute Team team,
-                           @RequestParam(value = "leaderId") Long leaderId,
+                           @AuthenticationPrincipal MyUserDetails userDetails,
                            @RequestParam(value = "membersId", required = false) List<Long> membersId){
-        Optional<User> leader =  userService.obtainById(leaderId);
-        leader.ifPresent(team::setLeader);
+        String username = userDetails.getUsername();
+        User user = userService.getByUsername(username);
+        team.setLeader(user);
         if(membersId == null){
             team.setMembers(new ArrayList<>());
         }else{
@@ -72,8 +75,36 @@ public class TeamController {
         }
         return "team/show_team";
     }
+    @GetMapping("/edit/{id}")
+    public String showFormModifyPerson(@AuthenticationPrincipal MyUserDetails userDetails, @PathVariable Long id, Model model){
+        Optional<Team> team = teamService.findById(id);
+        if(team.isPresent()) {
+            model.addAttribute("team", team);
+            model.addAttribute("members", userService.userRolesList(3L));
+            model.addAttribute("action", "/teams/edit/" + id);
+            return "team/form_team";
+        }
+        return "redirect:/teams/";
+    }
 
+    @PostMapping("/edit/{id}")
+    public String modifyTeam(@PathVariable Long id,
+                             @AuthenticationPrincipal MyUserDetails userDetails,
+                             @ModelAttribute Team team,
+                             @RequestParam(value = "membersId", required = false) List<Long> membersId){
+        String username = userDetails.getUsername();
+        User user = userService.getByUsername(username);
+        team.setLeader(user);
+        if(membersId == null){
+            team.setMembers(new ArrayList<>());
+        }else{
+            List<User> members = userService.findByIds(membersId);
+            team.setMembers(members);
+        }
+        teamService.updateTeam(id, team);
+        return "redirect:/teams/";
 
+    }
 
     @GetMapping("/{id}/members")
     public String showTeamMembers(@PathVariable Long id, Model model){
