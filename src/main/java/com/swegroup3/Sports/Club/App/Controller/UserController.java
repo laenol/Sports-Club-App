@@ -1,5 +1,6 @@
 package com.swegroup3.Sports.Club.App.Controller;
 
+import com.swegroup3.Sports.Club.App.Entities.Role;
 import com.swegroup3.Sports.Club.App.Repositories.RoleRepository;
 import com.swegroup3.Sports.Club.App.Services.UserService;
 import com.swegroup3.Sports.Club.App.dto.UserDto;
@@ -23,20 +24,33 @@ public class UserController {
     @Autowired
     private RoleRepository roleRepository;
 
-
     @GetMapping("/registration")
-    public String getRegistrationPage(@ModelAttribute("user") UserDto userDto) {
+    public String getRegistrationPage(@ModelAttribute("user") UserDto userDto, Model model) {
+        model.addAttribute("roles", roleRepository.findAll()); // Add this line
         return "register";
     }
+
+//    @PostMapping("/registration")
+//    public String saveUser(@ModelAttribute("user") UserDto userDto, Model model) {
+//        UserDto user = userDto;
+//        user.setRole(roleRepository.getReferenceById(3L));
+//        userService.saveUser(userDto);
+//        model.addAttribute("message", "Registered Successfully!");
+//        return "register";
+//    }
 
     @PostMapping("/registration")
     public String saveUser(@ModelAttribute("user") UserDto userDto, Model model) {
-        UserDto user = userDto;
-        user.setRole(roleRepository.getReferenceById(3L));
+        Long roleId = userDto.getRole().getId();
+        System.out.println(roleId);
+        Role role = roleRepository.getReferenceById(roleId.longValue());
+        userDto.setRole(role);
+//        System.out.println(userDto);
         userService.saveUser(userDto);
-        model.addAttribute("message", "Registered Successfuly!");
+        model.addAttribute("message", "Registered Successfully!");
         return "register";
     }
+
 
     @GetMapping("/login")
     public String login() {
