@@ -17,17 +17,17 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-            Role teamLeaderRole = roleRepository.findByName("team leader");
+            Role teamLeaderRole = roleRepository.findByName("LEADER");
             if (teamLeaderRole == null) {
                 teamLeaderRole = new Role();
-                teamLeaderRole.setName("team leader");
+                teamLeaderRole.setName("LEADER");
                 roleRepository.save(teamLeaderRole);
             }
 
-            Role memberRole = roleRepository.findByName("member");
+            Role memberRole = roleRepository.findByName("MEMBER");
             if (memberRole == null) {
                 memberRole = new Role();
-                memberRole.setName("member");
+                memberRole.setName("MEMBER");
                 roleRepository.save(memberRole);
         }
     }

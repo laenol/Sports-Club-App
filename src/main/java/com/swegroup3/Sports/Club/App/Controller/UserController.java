@@ -30,27 +30,16 @@ public class UserController {
         return "register";
     }
 
-//    @PostMapping("/registration")
-//    public String saveUser(@ModelAttribute("user") UserDto userDto, Model model) {
-//        UserDto user = userDto;
-//        user.setRole(roleRepository.getReferenceById(3L));
-//        userService.saveUser(userDto);
-//        model.addAttribute("message", "Registered Successfully!");
-//        return "register";
-//    }
-
     @PostMapping("/registration")
     public String saveUser(@ModelAttribute("user") UserDto userDto, Model model) {
         Long roleId = userDto.getRole().getId();
         System.out.println(roleId);
         Role role = roleRepository.getReferenceById(roleId.longValue());
         userDto.setRole(role);
-//        System.out.println(userDto);
         userService.saveUser(userDto);
         model.addAttribute("message", "Registered Successfully!");
         return "register";
     }
-
 
     @GetMapping("/login")
     public String login() {

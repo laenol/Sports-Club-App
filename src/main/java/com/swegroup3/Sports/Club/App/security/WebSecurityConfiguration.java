@@ -39,6 +39,7 @@ public class WebSecurityConfiguration {
                         request.requestMatchers("/admin-page").hasAuthority("ADMIN")
                                 .requestMatchers("/user-page").hasAnyAuthority("MEMBER","LEADER")
                         .requestMatchers("/registration").permitAll()
+                                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
                         .anyRequest().authenticated())
 
                 .formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
