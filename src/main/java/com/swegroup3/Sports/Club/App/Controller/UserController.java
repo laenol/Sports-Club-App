@@ -3,6 +3,8 @@ package com.swegroup3.Sports.Club.App.Controller;
 import com.swegroup3.Sports.Club.App.Entities.Role;
 import com.swegroup3.Sports.Club.App.Repositories.RoleRepository;
 import com.swegroup3.Sports.Club.App.Services.UserService;
+import com.swegroup3.Sports.Club.App.Services.TeamService;
+import com.swegroup3.Sports.Club.App.Services.EventService;
 import com.swegroup3.Sports.Club.App.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -21,6 +23,13 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TeamService teamService;
+
+    @Autowired
+    private EventService eventService;
+
     @Autowired
     private RoleRepository roleRepository;
 
@@ -50,6 +59,16 @@ public class UserController {
     public String userPage (Model model, Principal principal) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         model.addAttribute("user", userDetails);
+
+        long totalUserCountInTeams = teamService.getTotalUserCountInTeams();
+        model.addAttribute("totalUserCountInTeams", totalUserCountInTeams);
+        long totalEventCountInTeams = teamService.getTotalEventCountInTeams();
+        model.addAttribute("totalEventCountInTeams", totalEventCountInTeams);
+        long totalCompletedEvents = eventService.getTotalCompletedEvents();
+        model.addAttribute("totalCompletedEvents", totalCompletedEvents);
+
+        long totalPendingEvents = eventService.getTotalPendingEvents();
+        model.addAttribute("totalPendingEvents", totalPendingEvents);
         return "index";
     }
 

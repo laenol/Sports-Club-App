@@ -8,6 +8,7 @@ import com.swegroup3.Sports.Club.App.Services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -61,5 +62,15 @@ public class EventServiceImpl implements EventService {
     @Override
     public void deleteEvent(Long id) {
         eventRepository.deleteById(id);
+    }
+
+    @Override
+    public long getTotalCompletedEvents() {
+        return eventRepository.countByDateTimeEndBefore(new Date());
+    }
+
+    @Override
+    public long getTotalPendingEvents() {
+        return eventRepository.countByDateTimeEndAfter(new Date());
     }
 }

@@ -4,6 +4,7 @@ import com.swegroup3.Sports.Club.App.Entities.Team;
 import com.swegroup3.Sports.Club.App.Entities.User;
 import com.swegroup3.Sports.Club.App.Repositories.TeamRepository;
 import com.swegroup3.Sports.Club.App.Repositories.UserRepository;
+import com.swegroup3.Sports.Club.App.Repositories.EventRepository;
 import com.swegroup3.Sports.Club.App.Services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class TeamServiceImpl implements TeamService {
     private TeamRepository teamRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
 
     @Override
     public Team saveTeam(Team team) {
@@ -65,5 +69,20 @@ public class TeamServiceImpl implements TeamService {
         currentMembers.add(member);
         team.setTeam_members(currentMembers);
         teamRepository.save(team);
+    }
+
+    @Override
+    public long getTotalUserCountInTeams() {
+        return teamRepository.findAll().stream()
+                .mapToLong(team -> team.getTeam_members().size())
+                .sum();
+    }
+
+    @Override
+    public long getTotalEventCountInTeams() {
+        List<Team> teams = teamRepository.findAll();
+        return teams.stream()
+                .mapToLong(team -> eventRepository.countByTeam(team))
+                .sum();
     }
 }
