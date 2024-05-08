@@ -1,45 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Title</title>
+    <title>Team List</title>
+    <style>
+        body {
+            background-image: url('/img/green_grunge_texture_background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+    </style>
 </head>
 <body>
-
+<div th:replace="navbar :: navbar"></div>
 <div class="container mt-5">
-    <table class="table text-nowrap">
+    <table class="table table-striped table-hover table-bordered">
         <thead class="thead-dark">
         <tr>
             <th>ID</th>
             <th>TEAM</th>
             <th>LEADER</th>
             <th>MEMBERS</th>
-            <th> ACTIONS</th>
+            <th>ACTIONS</th>
         </tr>
         </thead>
         <tbody th:each="team: ${teams}">
-            <td th:text="${team.id}"></td>
-            <td>
-                <a th:href="@{/teams/{id}(id=${team.id})}" th:text="${team.name}"></a>
+        <tr>
+            <td th:text="${team.id}" class="text-light"></td>
+            <td class="text-light">
+                <a th:href="@{/teams/{id}(id=${team.id})}" th:text="${team.name}" class="text-light"></a>
             </td>
-            <td th:text="${team.leader.name}"></td>
+            <td th:text="${team.leader.name}" class="text-light"></td>
             <td>
-                <a th:href="@{/teams/{id}/members(id=${team.id})}" class="btn btn-info">View members</a>
+                <a th:href="@{/teams/{id}/members(id=${team.id})}" class="btn btn-info btn-sm">View members</a>
             </td>
             <td sec:authorize="hasAnyAuthority('LEADER')">
                 <div th:if="${user.id == team.leader.id}">
-                    <a th:href="@{/teams/edit/{id}(id=${team.id})}" class="btn btn-light">Update</a>
-                    <a th:href="@{/teams/{teamId}/delete(teamId = ${team.id})}" class="btn btn-warning">Delete</a>
+                    <a th:href="@{/teams/edit/{id}(id=${team.id})}" class="btn btn-light btn-sm">Update</a>
+                    <a th:href="@{/teams/{teamId}/delete(teamId = ${team.id})}" class="btn btn-warning btn-sm">Delete</a>
                 </div>
             </td>
             <td sec:authorize="hasAnyAuthority('MEMBER')">
-                <a th:href="@{/teams/{teamId}/add(teamId = ${team.id})}" th:if="${!team.getTeam_members().contains(user)}" class="btn btn-success">Enroll</a>
-                    <a th:href="@{/teams/{teamId}/leave(teamId = ${team.id})}" th:if="${team.getTeam_members().contains(user)} " class="btn btn-danger">Leave</a>
-
+                <a th:href="@{/teams/{teamId}/add(teamId = ${team.id})}" th:if="${!team.getTeam_members().contains(user)}" class="btn btn-success btn-sm">Enroll</a>
+                <a th:href="@{/teams/{teamId}/leave(teamId = ${team.id})}" th:if="${team.getTeam_members().contains(user)}" class="btn btn-danger btn-sm">Leave</a>
             </td>
+        </tr>
         </tbody>
     </table>
     <a sec:authorize="hasAnyAuthority('LEADER')" href="/teams/new" type="submit" class="btn btn-success">New Team</a>
