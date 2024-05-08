@@ -15,8 +15,8 @@
             <p class="card-text">Created By: <span th:text="${event.user.name}"></span></p>
             <p class="card-text">Description: <span th:text="${event.description}"></span></p>
             <p class="card-text">Participants number: <span th:text="${event.max_amount_participants}"></span></p>
-            <p class="card-text">Start Time: <span th:text="${#dates.format(event.dateTimeStart, 'dd-MM-yyyy HH:mm')}"></span></p>
-            <p class="card-text">End Time: <span th:text="${#dates.format(event.dateTimeEnd, 'dd-MM-yyyy HH:mm')}"></span></p>
+            <p class="card-text">Start Time: <span th:text="${#temporals.format(event.dateTimeStart, 'dd-MM-yyyy HH:mm')}"></span></p>
+            <p class="card-text">End Time: <span th:text="${#temporals.format(event.dateTimeEnd, 'dd-MM-yyyy HH:mm')}"></span></p>
             <p class="card-text">Location: <span th:text="${event.location}"></span></p>
             <p class="card-text">Created at: <span th:text="${#dates.format(event.timestamp, 'dd-MM-yyyy HH:mm')}"></span></p>
         </div>

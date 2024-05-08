@@ -2,49 +2,64 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>EVENTS</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>Team Events</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+  <style>
+    body {
+      background-image: url('/img/tenniscourt1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+    }
+  </style>
 </head>
 <body>
-
-<div class="container mt-5">
-  <h1><span th:text="${team.name}"></span>'S EVENTS</h1>
-  <table class="table text-nowrap">
-    <thead class="thead-dark">
-    <tr>
-      <th>ID</th>
-      <th>NAME</th>
-      <th>DESCRIPTION</th>
-      <th>LOCATION</th>
-      <th>MAX PARTICIPANTS</th>
-      <th>START DATE</th>
-      <th>END DATE</th>
-      <th>CREATED BY</th>
-      <th>CREATED AT</th>
-      <th>ACTIONS</th>
-    </tr>
-    </thead>
-    <tbody th:each="event: ${events}">
-    <td th:text="${event.id}"></td>
-    <td>
-      <a th:href="@{/events/{id}(id=${event.id})}" th:text="${event.name}"></a>
-    </td>
-    <td th:text="${event.description}"></td>
-    <td th:text="${event.location}"></td>
-    <td th:text="${event.max_amount_participants}"></td>
-    <td th:if="${event.dateTimeStart}" th:text="${#dates.format(event.dateTimeStart, 'dd-MM-yyyy HH:mm')}"></td>
-    <td th:if="${event.dateTimeStart}" th:text="${#dates.format(event.dateTimeEnd, 'dd-MM-yyyy HH:mm')}"></td>
-    <th th:text="${event.user.name}"></th>
-    <th th:text="${event.timestamp}"></th>
-    <th>
-
-      <a class="btn btn-info">Modify</a>
-      <a class="btn btn-danger">Delete</a>
-
-    </th>
-    </tbody>
-  </table>
-  <a th:href="@{/teams/{teamID}(teamID = ${team.id})}" type="submit" class="btn btn-success">Return</a>
+<div th:replace="navbar :: navbar"></div>
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><span th:text="${team.name}"></span>'s Events</h1>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+      <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Max Participants</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Created By</th>
+        <th>Created At</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="event: ${events}">
+        <td th:text="${event.id}"></td>
+        <td>
+          <a th:href="@{/events/{id}(id=${event.id})}" th:text="${event.name}" class="text-light"></a>
+        </td>
+        <td th:text="${event.description}" class="text-light"></td>
+        <td th:text="${event.location}" class="text-light"></td>
+        <td th:text="${event.max_amount_participants}" class="text-light"></td>
+        <td th:if="${event.dateTimeStart}" th:text="${#temporals.format(event.dateTimeStart, 'dd-MM-yyyy HH:mm')}" class="text-light"></td>
+        <td th:if="${event.dateTimeEnd}" th:text="${#temporals.format(event.dateTimeEnd, 'dd-MM-yyyy HH:mm')}" class="text-light"></td>
+        <td th:text="${event.user.name}" class="text-light"></td>
+        <td th:text="${event.timestamp}" class="text-light"></td>
+        <td>
+          <div class="btn-group">
+            <a class="btn btn-info me-2">Modify</a>
+            <a class="btn btn-danger">Delete</a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <a th:href="@{/teams/{teamId}(teamId=${team.id})}" class="btn btn-success">Return</a>
+  </div>
 </div>
 </body>
 </html>
