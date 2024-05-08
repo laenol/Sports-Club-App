@@ -60,6 +60,8 @@ public class UserController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         model.addAttribute("user", userDetails);
 
+        long totalCountTeams = teamService.getTotalTeamCount();
+        model.addAttribute("totalCountTeams", totalCountTeams);
         long totalUserCountInTeams = teamService.getTotalUserCountInTeams();
         model.addAttribute("totalUserCountInTeams", totalUserCountInTeams);
         long totalEventCountInTeams = teamService.getTotalEventCountInTeams();

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class TeamServiceImpl implements TeamService {
@@ -84,5 +83,10 @@ public class TeamServiceImpl implements TeamService {
         return teams.stream()
                 .mapToLong(team -> eventRepository.countByTeam(team))
                 .sum();
+    }
+
+    @Override
+    public long getTotalTeamCount() {
+        return teamRepository.count();
     }
 }

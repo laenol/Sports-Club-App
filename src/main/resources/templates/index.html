@@ -20,8 +20,8 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Total User Count in Teams</h5>
-                            <p class="card-text" th:text="${totalUserCountInTeams}"></p>
+                            <h5 class="card-title">Total Count Teams</h5>
+                            <p class="card-text" th:text="${totalCountTeams}"></p>
                         </div>
                     </div>
                 </div>
@@ -38,12 +38,22 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
+                            <h5 class="card-title">Total Event Count in Teams</h5>
+                            <p class="card-text" th:text="${totalEventCountInTeams}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
                             <h5 class="card-title">Total Completed Events in Teams</h5>
                             <p class="card-text" th:text="${totalCompletedEvents}"></p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Total Pending Events in Teams</h5>

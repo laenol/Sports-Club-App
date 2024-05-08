@@ -18,4 +18,5 @@ public interface TeamService {
     void addMember(Long teamId, User member);
     long getTotalUserCountInTeams();
     long getTotalEventCountInTeams();
+    long getTotalTeamCount();
 }
