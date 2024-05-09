@@ -37,14 +37,19 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event updateEvent(Long id, Event event) {
+
         Event eventDDBB = eventRepository.findById(id).orElse(null);
         if (eventDDBB != null) {
             eventDDBB.setName(event.getName());
             eventDDBB.setTeam(event.getTeam());
             eventDDBB.setDescription(event.getDescription());
-            // eventDDBB.setUsers(event.getUsers());
+            eventDDBB.setDateTimeStart(event.getDateTimeStart());
+            eventDDBB.setDateTimeEnd(event.getDateTimeEnd());
             eventDDBB.setMax_amount_participants(event.getMax_amount_participants());
             eventDDBB.setLocation(event.getLocation());
+
+            eventDDBB.setUser(eventDDBB.getUser());
+            eventRepository.save(eventDDBB);
         }
         return event;
     }

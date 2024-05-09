@@ -26,31 +26,31 @@
                 </div>
                 <div class="card-body">
                     <h3 class="card-title"><span th:text="${team.leader.name}"></span> LEADER OF <span th:text="${team.name}"></span></h3>
-                    <form th:action="@{/events/{teamId}/save(teamId=${team.id})} " method="POST">
+                    <form th:action="${action}" th:object="${event}" method="POST">
                         <input type="hidden" th:value="${event.id}">
                         <div class="form-group mt-2">
                             <label for="name">Event name</label>
-                            <input class="form-control" id="name" name="name" type="text" th:field="*{event.name}">
+                            <input class="form-control" id="name" name="name" type="text" th:field="*{name}">
                         </div>
                         <div class="form-group mt-2">
                             <label for="description">Event description</label>
-                            <input class="form-control" id="description" name="description" type="text" th:field="*{event.description}">
+                            <input class="form-control" id="description" name="description" type="text" th:field="*{description}">
                         </div>
                         <div class="form-group mt-2">
                             <label for="location">Event location</label>
-                            <input class="form-control" id="location" name="location" type="text" th:field="*{event.location}">
+                            <input class="form-control" id="location" name="location" type="text" th:field="*{location}">
                         </div>
                         <div class="form-group mt-2">
                             <label for="eventStart">Event Date starts At: </label>
-                            <input class="form-control" id="eventStart" name="eventStart" type="datetime-local" th:field="*{event.dateTimeStart}">
+                            <input class="form-control" id="eventStart" name="eventStart" type="datetime-local" th:field="*{dateTimeStart}">
                         </div>
                         <div class="form-group mt-2">
                             <label for="eventEnd">Event Date ends At: </label>
-                            <input class="form-control" id="eventEnd" name="eventEnd" type="datetime-local" th:field="*{event.dateTimeEnd}">
+                            <input class="form-control" id="eventEnd" name="eventEnd" type="datetime-local" th:field="*{dateTimeEnd}">
                         </div>
                         <div class="form-group mt-2">
                             <label for="max_participants">Event MAXIMUM participants</label>
-                            <input class="form-control" id="max_participants" name="max_participants" type="number" th:field="*{event.max_amount_participants}">
+                            <input class="form-control" id="max_participants" name="max_participants" type="number" th:field="*{max_amount_participants}">
                         </div>
                         <div class="d-flex justify-content-between mt-2">
                             <a href="/teams/" class="btn btn-secondary me-2">Return</a>
