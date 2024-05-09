@@ -1,48 +1,38 @@
 package com.swegroup3.Sports.Club.App.Controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.swegroup3.Sports.Club.App.Entities.Comment;
 import com.swegroup3.Sports.Club.App.Services.CommentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+import java.util.List;
+
+@Controller
 @RequestMapping("/comments")
 public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @PostMapping("/")
-    public Comment addComment(@RequestBody Comment comment) {
-        return commentService.createComment(comment);
+    @GetMapping("/add")
+    public ModelAndView showAddCommentForm() {
+        ModelAndView modelAndView = new ModelAndView("add_comment");
+        modelAndView.addObject("comment", new Comment());
+        return modelAndView;
     }
 
-    @GetMapping("/")
-    public List<Comment> getAllComments() {
-        return commentService.getAllComments();
+    @PostMapping("/add")
+    public String addComment(@ModelAttribute Comment comment) {
+        commentService.createComment(comment);
+        return "redirect:/comments/all"; // Adjust the redirect to wherever you want users to go after submission
     }
 
-    @GetMapping("/{id}")
-    public Comment getCommentById(@PathVariable Long id) {
-        return commentService.getCommentById(id);
-    }
-
-    @PutMapping("/{id}")
-    public Comment updateComment(@PathVariable Long id, @RequestBody Comment comment) {
-        return commentService.updateComment(id, comment);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteComment(@PathVariable Long id) {
-        commentService.deleteComment(id);
+    @GetMapping("/all")
+    public ModelAndView getAllComments() {
+        List<Comment> comments = commentService.getAllComments();
+        ModelAndView modelAndView = new ModelAndView("list_comments");
+        modelAndView.addObject("comments", comments);
+        return modelAndView;
     }
 }

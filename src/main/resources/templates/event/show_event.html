@@ -29,10 +29,27 @@
             <p class="card-text">End Time: <span th:text="${#temporals.format(event.dateTimeEnd, 'dd-MM-yyyy HH:mm')}"></span></p>
             <p class="card-text">Location: <span th:text="${event.location}"></span></p>
             <p class="card-text">Created at: <span th:text="${#dates.format(event.timestamp, 'dd-MM-yyyy HH:mm')}"></span></p>
+            <hr>
+            <!-- Comments Section -->
+            <div>
+                <h4>Comments:</h4>
+                <ul class="list-unstyled">
+                    <li th:each="comment : ${comments}">
+                        <strong th:text="${comment.user.name}">Username</strong>: <span th:text="${comment.content}">Comment content</span>
+                </ul>
+            </div>
+            <!-- Comment Form -->
+            <div>
+                <h5>Add a comment:</h5>
+                <form th:action="@{/events/{eventId}/add-comment(eventId=${event.id})}" th:object="${newComment}" method="post">
+                    <input type="text" th:field="*{content}" class="form-control" placeholder="Write your comment here"/>
+                    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
-
-    <a th:href="@{/teams/{id}(id=${team.id})}" class="btn btn-info mt-3">Return</a>
+</div>
+<a th:href="@{/teams/{id}(id=${team.id})}" class="btn btn-info mt-3">Return</a>
 </div>
 </body>
 </html>
