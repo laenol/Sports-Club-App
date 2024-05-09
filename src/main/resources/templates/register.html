@@ -1,32 +1,45 @@
+<!doctype html>
+<html class="no-js" lang="">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=">
+    <title>Login/Registration Form</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <meta name="description" content="">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <meta property="og:image:alt" content="">
 </head>
 <body>
-<div class="container mt-5">
+<div class="form-structor">
     <div class="alert alert-info" th:if="${message != null}">
-        [[${message}]]
+                [[${message}]]
     </div>
-    <a class="btn btn-info" href="/login/">LOG IN </a>
-    <h2>Registration Form</h2>
     <form th:action="@{/registration}" method="post" role="form" th:object="${user}">
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input th:field="*{name}" type="text" class="form-control" id="name" name="name" placeholder="Enter your fullname" required>
+    <div class="signup">
+        <h2 class="form-title" id="signup">Sign up</h2>
+        <div class="form-holder">
+            <input th:field="*{name}" type="text" class="input" id="name" name="name" placeholder="Enter your fullname" required />
+            <input th:field="*{username}" type="text" class="input"  id="username" name="username" placeholder="Enter your username" required />
+            <input th:field="*{password}" type="password" class="input" id="password" name="password" placeholder="Enter your password" required />
+            <div class="checkboxes">
+                <select th:field="*{role.id}" class="checkboxes" id="role" name="role" required>
+                    <option value="">Select a role</option>
+                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                </select>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input th:field="*{username}" type="text" class="form-control" id="username" name="username" placeholder="Enter your email" required>
-        </div>
-
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input th:field="*{password}" type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button class="submit-btn">Sign up</button>
+    </div>
     </form>
+    <div class="login slide-up">
+        <div class="center">
+            <h2 class="form-title" id="login"><a style="text-decoration: none; color: white" class="btn btn-info" href="/login">Login</a></h2>
+        </div>
+    </div>
 </div>
+<script src="/js/app.js"></script>
 </body>
+</html>

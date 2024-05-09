@@ -8,11 +8,13 @@ import com.swegroup3.Sports.Club.App.Services.MyUserDetails;
 import com.swegroup3.Sports.Club.App.Services.TeamService;
 import com.swegroup3.Sports.Club.App.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
@@ -22,8 +24,6 @@ public class EventController {
     private EventService eventService;
     @Autowired
     private UserService userService;
-    @Autowired
-    private TeamService teamService;
 
 
 
@@ -38,15 +38,24 @@ public class EventController {
 
         return "event/form_event";
     }
+    @Autowired
+    private TeamService teamService;
+
     @PostMapping("/{teamId}/save")
-    public String saveEvent(@ModelAttribute Event event,
-                            @AuthenticationPrincipal MyUserDetails userDetails,
-                            @PathVariable Long teamId){
+    public String saveEvent(
+            @ModelAttribute Event event,
+            @AuthenticationPrincipal MyUserDetails userDetails,
+            @PathVariable Long teamId,
+            @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime dateTimeStart,
+            @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime dateTimeEnd) {
+
         Optional<Team> team = teamService.findById(teamId);
         String username = userDetails.getUsername();
         User userAuthenticated = userService.getByUsername(username);
         event.setUser(userAuthenticated);
         team.ifPresent(event::setTeam);
+        event.setDateTimeStart(dateTimeStart);
+        event.setDateTimeEnd(dateTimeEnd);
         eventService.SaveEvent(event);
 
         return "redirect:/teams/"+teamId;

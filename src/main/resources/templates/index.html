@@ -4,21 +4,86 @@
 <head>
     <meta charset="UTF-8">
     <title>SPORTS CLUB APPLICATION</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>HI</h1>
-    <div class="container mb-2">
-        <div sec:authorize="isAuthenticated()">
-            <p class="fs-3 fw-bold" th:inline="text">Welcome <span sec:authentication="name"></span></p>
-            &nbsp;
-            <p class="fs-3 fw-bold" th:inline="text">Roles <span sec:authentication="principal.authorities"></span></p>
-
+<div th:replace="navbar :: navbar"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mt-4">Hi, <span sec:authentication="name"></span>! Welcome!</h1>
         </div>
-        <form th:action="@{/logout}" method="POST">
-            <input class="btn btn-info" type="submit" value="Logout">
-        </form>
     </div>
-
-    <a class="btn btn-info"  href="/teams/" >TEAMS</a>
+    <div class="row">
+        <div sec:authorize="hasAuthority('LEADER')" class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Count Teams</h5>
+                            <p class="card-text" th:text="${totalCountTeams}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Event Count in Teams</h5>
+                            <p class="card-text" th:text="${totalEventCountInTeams}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Event Count in Teams</h5>
+                            <p class="card-text" th:text="${totalEventCountInTeams}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Completed Events in Teams</h5>
+                            <p class="card-text" th:text="${totalCompletedEvents}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Pending Events in Teams</h5>
+                            <p class="card-text" th:text="${totalPendingEvents}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div sec:authorize="hasAuthority('MEMBER')" class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Event Sign-Ups</h5>
+                            <p class="card-text"><s>0</s></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Completed Events</h5>
+                            <p class="card-text"><s>0</s></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

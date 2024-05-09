@@ -3,6 +3,7 @@ package com.swegroup3.Sports.Club.App.Services.implementations;
 import com.swegroup3.Sports.Club.App.Entities.User;
 import com.swegroup3.Sports.Club.App.Repositories.TeamRepository;
 import com.swegroup3.Sports.Club.App.Repositories.UserRepository;
+import com.swegroup3.Sports.Club.App.Repositories.EventRepository;
 import com.swegroup3.Sports.Club.App.Services.UserService;
 import com.swegroup3.Sports.Club.App.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -81,6 +85,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAllById(listMembers);
     }
 
-
+//    @Override
+//    public long getTotalEventSignUps() {
+//        return eventRepository.countByUsersContaining(userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+//    }
+//
+//    @Override
+//    public long getTotalCompletedEvents() {
+//        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+//        return eventRepository.countByUsersContainingAndDateTimeEndBefore(user, new Timestamp(System.currentTimeMillis()));
+//    }
 
 }

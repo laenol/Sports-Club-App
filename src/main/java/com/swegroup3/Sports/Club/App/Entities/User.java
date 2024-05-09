@@ -35,15 +35,6 @@ public class User {
         this.role = role;
     }
 
-
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    @JoinTable(
-//            name = "user_event",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "event_id")
-//    )
-//    private Set<Event> events = new HashSet<>();
-
     @ManyToMany(mappedBy = "team_members")
     private List<Team> teams = new ArrayList<>();
 

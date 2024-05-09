@@ -16,4 +16,7 @@ public interface TeamService {
     Team updateTeam(Long id, Team team);
     void deleteTeam(Long id);
     void addMember(Long teamId, User member);
+    long getTotalUserCountInTeams();
+    long getTotalEventCountInTeams();
+    long getTotalTeamCount();
 }

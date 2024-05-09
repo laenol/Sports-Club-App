@@ -4,14 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Singular;
-import org.hibernate.annotations.BatchSize;
-
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data
@@ -26,9 +20,13 @@ public class Event {
     private String location;
     private Long max_amount_participants;
 
-    private Date dateTimeStart;
+    private LocalDateTime dateTimeStart;
+    private LocalDateTime dateTimeEnd;
 
-    private Date dateTimeEnd;
+    @Transient
+    private String dateTimeStartStr;
+    @Transient
+    private String dateTimeEndStr;
 
     @ManyToOne
     @JoinColumn(name = "team_id")
@@ -39,4 +37,9 @@ public class Event {
     private User user;
 
     private Timestamp timestamp;
+
+    @PrePersist
+    public void setTimestamp() {
+        this.timestamp = new Timestamp(System.currentTimeMillis());
+    }
 }
