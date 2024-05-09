@@ -71,7 +71,7 @@ public class EventController {
         if(teamOptional.isPresent()){
             Team team = teamOptional.get();
             model.addAttribute("team", team);
-            model.addAttribute("userLoggedID",user.getId());
+            model.addAttribute("userLogged",user);
             model.addAttribute("events", team.getEvents());
         }
         return "event/show_team_events";
@@ -124,5 +124,29 @@ public class EventController {
     public String deleteEvent(@PathVariable Long id){
         eventService.deleteEvent(id);
         return "redirect:/teams/"; //
+    }
+
+
+    @GetMapping("/{id}/add")
+    public String addMemberToEvent(@AuthenticationPrincipal MyUserDetails userDetails, @PathVariable Long id){
+        String username = userDetails.getUsername();
+        User user = userService.getByUsername(username);
+        eventService.addUserToEvent(id,user);
+        return "redirect:/teams/";
+    }
+    @GetMapping("{id}/leave")
+    public String leaveMemberFromTeam(@AuthenticationPrincipal MyUserDetails userDetails, @PathVariable Long id){
+        String username = userDetails.getUsername();
+        User user = userService.getByUsername(username);
+        Optional<Event> eventOptional = eventService.findById(id);
+        if(eventOptional.isPresent()){
+            Event event = eventOptional.get();
+            Boolean isMember = event.getEvent_members().contains(user);
+            if(isMember){
+                event.getEvent_members().remove(user);
+                eventService.SaveEvent(event);
+            }
+        }
+        return "redirect:/teams/";
     }
 }

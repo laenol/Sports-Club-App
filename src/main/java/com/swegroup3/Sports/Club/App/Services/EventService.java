@@ -15,7 +15,7 @@ public interface EventService {
     List<Event> listAllEvents();
     Event updateEvent(Long id, Event event);
 
-    Event addUserToEvent(Long id,Event event, User user);
+    Event addUserToEvent(Long id, User user);
     void deleteEvent(Long id);
     long getTotalCompletedEvents();
     long getTotalPendingEvents();

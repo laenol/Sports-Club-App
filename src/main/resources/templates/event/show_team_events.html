@@ -50,9 +50,13 @@
         <td th:text="${event.user.name}" class="text-light"></td>
         <td th:text="${event.timestamp}" class="text-light"></td>
         <td>
-          <div th:if="${event.user.id == userLoggedID}" class="btn-group">
+          <div th:if="${event.user.id == userLogged.id}" class="btn-group">
             <a class="btn btn-info me-2" th:href="@{/events/edit/{id}(id=${event.id})}">Modify</a>
             <a class="btn btn-danger" th:href="@{/events/{id}/delete(id=${event.id})}">Delete</a>
+          </div>
+          <div th:if="${team.getTeam_members.contains(userLogged)}">
+              <a th:href="@{/events/{eventId}/add(eventId = ${event.id})}" th:if="${!event.getEvent_members().contains(userLogged)}" class="btn btn-success btn-sm">Enroll</a>
+              <a th:href="@{/events/{eventId}/leave(eventId = ${event.id})}" th:if="${event.getEvent_members().contains(userLogged)}" class="btn btn-danger btn-sm">Leave</a>
           </div>
         </td>
       </tr>

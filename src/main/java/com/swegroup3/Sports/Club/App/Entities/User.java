@@ -38,4 +38,9 @@ public class User {
     @ManyToMany(mappedBy = "team_members")
     private List<Team> teams = new ArrayList<>();
 
+
+    @ManyToMany(mappedBy = "event_members")
+    private List<Event> events = new ArrayList<>();
+
+
 }

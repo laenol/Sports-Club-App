@@ -55,14 +55,16 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Event addUserToEvent(Long id, Event event, User user) {
+    public Event addUserToEvent(Long id, User user) {
         Event eventDDBB = eventRepository.findById(id).orElse(null);
         if (eventDDBB != null) {
-            // Set<User> tempUsers = event.getUsers();
-            // tempUsers.add(user);
-            // eventDDBB.setUsers(tempUsers);
+             List<User> tempUsers = eventDDBB.getEvent_members();
+            System.out.println(tempUsers);
+             tempUsers.add(user);
+             eventDDBB.setEvent_members(tempUsers);
+             eventRepository.save(eventDDBB);
         }
-        return event;
+        return eventDDBB;
     }
 
     @Override

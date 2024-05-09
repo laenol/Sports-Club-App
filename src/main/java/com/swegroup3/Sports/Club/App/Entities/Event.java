@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -42,4 +44,13 @@ public class Event {
     public void setTimestamp() {
         this.timestamp = new Timestamp(System.currentTimeMillis());
     }
+
+
+    @ManyToMany (cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "member_event",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "member_id")
+    )
+    private List<User> event_members = new ArrayList<>();
 }
