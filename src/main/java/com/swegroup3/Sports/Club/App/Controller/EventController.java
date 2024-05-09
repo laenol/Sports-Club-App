@@ -15,8 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -32,7 +30,6 @@ public class EventController {
 
     @GetMapping("/{teamId}/new")
     public String showFormAddEvent(@PathVariable Long teamId,
-                                   @AuthenticationPrincipal MyUserDetails userDetails,
                                    Model model){
         Optional<Team> team = teamService.findById(teamId);
         model.addAttribute("event", new Event());
@@ -111,9 +108,7 @@ public class EventController {
     public String modifyEvent(@PathVariable Long teamId,
                               @PathVariable Long id,
                               @AuthenticationPrincipal MyUserDetails userDetails,
-                             @ModelAttribute Event event,
-                              @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime dateTimeStart,
-                              @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime dateTimeEnd) {
+                             @ModelAttribute Event event) {
         String username = userDetails.getUsername();
         User user = userService.getByUsername(username);
         Optional<Event> eventOptional = eventService.findById(id);
@@ -125,15 +120,9 @@ public class EventController {
         }
         return "redirect:/teams/";
     }
-    @GetMapping("/{id}/delete")
+    @GetMapping("{id}/delete")
     public String deleteEvent(@PathVariable Long id){
-        Optional<Event> eventOptional = eventService.findById(id);
-        if(eventOptional.isPresent()){
-            System.out.println("HOLA");
-            Event event = eventOptional.get();
-            event.setUser(null);
-            eventService.deleteEvent(event.getId());
-        }
-        return "redirect:/teams/list"; //
+        eventService.deleteEvent(id);
+        return "redirect:/teams/"; //
     }
 }

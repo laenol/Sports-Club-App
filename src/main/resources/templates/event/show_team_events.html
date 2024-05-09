@@ -52,7 +52,7 @@
         <td>
           <div th:if="${event.user.id == userLoggedID}" class="btn-group">
             <a class="btn btn-info me-2" th:href="@{/events/edit/{id}(id=${event.id})}">Modify</a>
-            <a class="btn btn-danger" th:href="@{/event/{id}/delete(id=${event.id})}">Delete</a>
+            <a class="btn btn-danger" th:href="@{/events/{id}/delete(id=${event.id})}">Delete</a>
           </div>
         </td>
       </tr>
