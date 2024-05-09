@@ -27,7 +27,7 @@
             <div class="checkboxes">
                 <select th:field="*{role.id}" class="checkboxes" id="role" name="role" required>
                     <option value="">Select a role</option>
-                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                    <option th:if="${role.name !='DEVELOPER'}" th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
                 </select>
             </div>
         </div>
